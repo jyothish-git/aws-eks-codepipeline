@@ -1,0 +1,36 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - pip install gitpython
+      - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+      - unzip terraform_${TF_VERSION}_linux_amd64.zip
+      - mv terraform /bin
+      - wget https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}/terragrunt_linux_amd64
+      - mv terragrunt_linux_amd64 /bin/terragrunt
+      - chmod +x /bin/terragrunt
+  pre_build:
+    commands:
+      - git config --global credential.helper "!aws codecommit credential-helper $@"
+      - git config --global credential.UseHttpPath true
+      - git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/${REPO_NAME} /build-dir/${REPO_NAME}
+      - python build-scripts/tf_deploy.py
+      - . /build-dir/build-env.txt
+      - . /build-dir/git-tag.txt
+  build:
+    commands:
+      - cd /build-dir/${REPO_NAME}
+      - git checkout ${GIT_TAG}
+      - cd eks
+      - terraform init
+      - ls -ltr
+      - ls -a
+      - cat .terraform.lock.hcl
+      - #cat provider.tf
+      - terraform plan
+      - terraform apply -auto-approve
+      - #terraform destroy -auto-approve
+  post_build:
+    commands:
+      - echo Build completed on `date`
