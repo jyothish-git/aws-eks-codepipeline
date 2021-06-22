@@ -15,5 +15,5 @@ CodeBuild => CodePipeline invoke CodeBuild and CodeBuild perform the EKS cluster
 ```
 1. App Mesh controller deployed in EKS
 2. Deployed App mesh resources in EKS
-3. Deployed a sample nginx app in EKS using app mesh.
+3. Deployed a sample app in EKS using app mesh.
 ```
