@@ -25,9 +25,6 @@ phases:
       - cd eks
       - terraform init
       - ls -ltr
-      - ls -a
-      - cat .terraform.lock.hcl
-      - #cat provider.tf
       - terraform plan
       - terraform apply -auto-approve
       - #terraform destroy -auto-approve
