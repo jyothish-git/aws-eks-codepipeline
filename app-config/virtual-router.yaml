@@ -16,5 +16,8 @@ spec:
         action:
           weightedTargets:
             - virtualNodeRef:
+                name: nginx-service-a
+              weight: 0
+            - virtualNodeRef:
                 name: nginx-service-b
-              weight: 100
+              weight: 1
