@@ -1,3 +1,4 @@
+#This script will find out the Git tag & Deployment environment and pass it to buildspec file#
 import git
 import os
 import subprocess
